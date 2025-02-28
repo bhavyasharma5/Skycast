@@ -1,0 +1,191 @@
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #00feba, #5b548a);
+    overflow: hidden;
+}
+
+.weather img {
+    width: 300px;
+    margin: 10px 0;
+    transition: transform 0.3s ease; 
+}
+
+.weather img:hover {
+    transform: scale(1.05);
+}
+
+.Skycast-app {
+    width: 90%;
+    max-width: 470px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    padding: 40px 35px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.search {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.search-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.location {
+    font-size: 2.4rem;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    padding: 10px 20px;
+}
+
+.search-bar input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    padding: 10px;
+    font-size: 1.6rem;
+    flex: 1;
+}
+
+.search-bar input::placeholder {
+    color: #fff;
+}
+
+.weather {
+    text-align: center;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.weather-type {
+    font-size: 2.8rem;
+    margin: 5px 0;
+}
+
+.temp {
+    font-size: 4rem;
+    margin: 15px 0;
+}
+
+.weather-date {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+}
+
+.weather-data {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.humidity, .wind {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 15px;
+    width: 48%;
+    transition: all 0.3s ease;
+}
+
+.humidity:hover, .wind:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Update icon and data value styles */
+.humidity i, .wind i {
+    font-size: 2.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.data-name {
+    font-size: 1.6rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 5px;
+}
+
+.data-value {
+    font-size: 1.4rem;
+    color: #fff;
+    margin-left: 0;
+}
+
+i {
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.fa-location-dot, .fa-magnifying-glass {
+    cursor: pointer;
+    font-size: 1.8rem;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .Skycast-app {
+        padding: 20px;
+    }
+
+    .weather img {
+        width: 200px;
+    }
+
+    .temp {
+        font-size: 3rem;
+    }
+
+    .weather-type {
+        font-size: 2.2rem;
+    }
+
+    .weather {
+        margin: 15px 0;
+    }
+}
+
+.weather-data {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+    gap: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .weather-data {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .humidity, .wind {
+        width: 100%;
+        padding: 15px;
+    }
+}
