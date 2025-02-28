@@ -1,4 +1,4 @@
-import sunny from '../assets/sunny.png'
+import sunny from '../assets/images/sunny.png'
 //import cloudy from '../assets/cloudy.png'
 //import rainy from '../assets/rainy.png'
 //import snowy from '../assets/snowy.png'
