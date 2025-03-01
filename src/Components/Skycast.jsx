@@ -2,8 +2,19 @@ import sunny from '../assets/images/sunny.png'
 //import cloudy from '../assets/cloudy.png'
 //import rainy from '../assets/rainy.png'
 //import snowy from '../assets/snowy.png'
+import { useState } from 'react';
 
 const Skycast = () => {
+    const [data, setData] = useState({})
+    const api_key = "2d1295eddc118f32074dcd1bbcbba698";
+
+    const search = async () => {
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=New%20Delhi&units=Metric&appid=${api_key}`
+        const response = await fetch(url)
+        const searchData = await response.json()
+        console.log(searchData)
+        setData(searchData)
+    }
   return (
     <div className="container">
       <div className="Skycast-app">
@@ -14,7 +25,7 @@ const Skycast = () => {
           </div>
           <div className="search-bar">
             <input type="text" placeholder="Enter the Location" />
-            <i className="fa-solid fa-magnifying-glass"></i>
+            <i className="fa-solid fa-magnifying-glass" onClick={search}></i>
           </div>
         </div>
         <div className="weather">
