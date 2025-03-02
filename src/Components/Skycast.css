@@ -1,11 +1,12 @@
 .container {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     background: linear-gradient(135deg, #00feba, #5b548a);
-    overflow: hidden;
+    padding: 20px;
+    overflow-y: auto;
 }
 
 .weather img {
@@ -27,6 +28,7 @@
     padding: 40px 35px;
     border-radius: 20px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    margin: 20px 0;
 }
 
 .search {
@@ -43,6 +45,7 @@
 
 .location {
     font-size: 2.4rem;
+    color: #fff;
 }
 
 .search-bar {
@@ -83,6 +86,36 @@
 .temp {
     font-size: 4rem;
     margin: 15px 0;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    position: relative;
+}
+
+.temp:hover {
+    transform: scale(1.05);
+}
+
+/* More subtle tooltip */
+.temp::after {
+    content: 'Click to toggle °C/°F';
+    font-size: 1rem;  /* Slightly smaller font */
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    color: rgba(255, 255, 255, 0.6);  /* Semi-transparent text */
+    white-space: nowrap;
+}
+
+.temp:hover::after {
+    opacity: 0.4;  /* Reduced opacity on hover */
+}
+
+/* Light theme adjustment */
+.light .temp::after {
+    color: rgba(51, 51, 51, 0.6);  /* Semi-transparent dark text for light theme */
 }
 
 .weather-date {
@@ -117,7 +150,7 @@
 
 /* Update icon and data value styles */
 .humidity i, .wind i {
-    font-size: 2.2rem;
+    font-size: 2.4rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -125,15 +158,16 @@
 }
 
 .data-name {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     color: rgba(255, 255, 255, 0.9);
     margin-bottom: 5px;
 }
 
 .data-value {
-    font-size: 1.4rem;
+    font-size: 2rem;
     color: #fff;
-    margin-left: 0;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 i {
@@ -149,7 +183,12 @@ i {
 
 /* Responsive Design */
 @media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
     .Skycast-app {
+        margin: 10px 0;
         padding: 20px;
     }
 
@@ -167,6 +206,10 @@ i {
 
     .weather {
         margin: 15px 0;
+    }
+
+    .data-value {
+        font-size: 1.8rem;
     }
 }
 
@@ -188,4 +231,255 @@ i {
         width: 100%;
         padding: 15px;
     }
+}
+
+/* Optional: Add some animation for the error message */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.location:has(error) {
+    color: #ff6b6b;  /* Red color for error */
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Dark theme (default) */
+.container.dark {
+    background: linear-gradient(135deg, #00feba, #5b548a);
+}
+
+.dark .Skycast-app {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.dark .search-bar {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.dark .search-bar input {
+    color: #fff;
+}
+
+.dark .search-bar input::placeholder {
+    color: #fff;
+}
+
+.dark .humidity, 
+.dark .wind {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Light theme */
+.container.light {
+    background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+}
+
+.light .Skycast-app {
+    background: rgba(255, 255, 255, 0.8);
+    color: #333;
+}
+
+.light .search-bar {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.light .search-bar input {
+    color: #333;
+}
+
+.light .search-bar input::placeholder {
+    color: #666;
+}
+
+.light .humidity, 
+.light .wind {
+    background: rgba(255, 255, 255, 0.6);
+    color: #333;
+}
+
+/* Theme toggle button styles */
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+.theme-toggle i {
+    font-size: 2rem;
+    color: #fff;
+}
+
+.light .theme-toggle i {
+    color: #333;
+}
+
+/* Update existing styles to work with both themes */
+.light .data-name,
+.light .data-value,
+.light .weather-type,
+.light .temp,
+.light .weather-date,
+.light .location {
+    color: #333;
+}
+
+.light .fa-location-dot,
+.light .fa-magnifying-glass {
+    color: #333;
+}
+
+.forecast {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.forecast-day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 80px;
+    padding: 10px;
+}
+
+.forecast-date {
+    font-size: 1.4rem;
+    color: #fff;
+}
+
+.forecast-icon {
+    width: 50px;
+    height: 50px;
+}
+
+.forecast-temp {
+    font-size: 1.6rem;
+    color: #fff;
+}
+
+/* Light theme adjustments */
+.light .forecast {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.light .forecast-date,
+.light .forecast-temp {
+    color: #333;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+    .forecast {
+        margin-top: 20px;
+        padding: 15px;
+    }
+
+    .forecast-day {
+        min-width: 70px;
+    }
+
+    .forecast-date {
+        font-size: 1.2rem;
+    }
+
+    .forecast-temp {
+        font-size: 1.4rem;
+    }
+}
+
+.weather-alert {
+    background: rgba(255, 87, 87, 0.2);
+    border-left: 4px solid #ff5757;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 0 10px 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    backdrop-filter: blur(10px);
+    animation: slideIn 0.3s ease-out;
+}
+
+.weather-alert i {
+    color: #ff5757;
+    font-size: 2rem;
+}
+
+.weather-alert span {
+    font-size: 1.4rem;
+    color: #fff;
+    flex: 1;
+}
+
+/* Light theme adjustments */
+.light .weather-alert {
+    background: rgba(255, 87, 87, 0.1);
+    border-left: 4px solid #ff5757;
+}
+
+.light .weather-alert span {
+    color: #333;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+    .weather-alert {
+        padding: 12px;
+        margin: 15px 0;
+    }
+    
+    .weather-alert span {
+        font-size: 1.2rem;
+    }
+}
+
+/* Customize webkit scrollbar */
+.forecast::-webkit-scrollbar {
+    height: 6px;
+}
+
+.forecast::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.forecast::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+}
+
+/* Light theme scrollbar adjustments */
+.light .forecast::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
 }
