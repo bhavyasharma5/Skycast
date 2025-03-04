@@ -25,7 +25,7 @@ const Skycast = () => {
         return now.toLocaleDateString('en-US', options);
     };
 
-    // Function to determine which weather image to show
+
     const getWeatherImage = (weatherMain) => {
         if (!weatherMain) return sunny; // default image
         
