@@ -2,12 +2,13 @@ import sunny from '../assets/images/sunny.png'
 import cloudy from '../assets/images/cloudy.png'
 import rainy from '../assets/images/rainy.png'
 import snowy from '../assets/images/snowy.png'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Skycast = () => {
     const [data, setData] = useState({})
     const [location, setLocation] = useState('')
     const [error, setError] = useState('')
+    const [suggestions, setSuggestions] = useState([]);
     const api_key = "2d1295eddc118f32074dcd1bbcbba698";
     const [isDark, setIsDark] = useState(true);
     const [isCelsius, setIsCelsius] = useState(true);
@@ -45,9 +46,36 @@ const Skycast = () => {
         }
     }
 
+    // Function to fetch location suggestions
+    const fetchSuggestions = async (input) => {
+        if (input.length > 2) { // Fetch suggestions only if input length is greater than 2
+            try {
+                const url = `https://api.openweathermap.org/data/2.5/find?q=${input}&appid=${api_key}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                if (response.ok) {
+                    setSuggestions(data.list); // Set suggestions based on API response
+                } else {
+                    setSuggestions([]); // Clear suggestions on error
+                }
+            } catch (err) {
+                console.error('Error fetching suggestions:', err);
+                setSuggestions([]); // Clear suggestions on error
+            }
+        } else {
+            setSuggestions([]); // Clear suggestions if input is too short
+        }
+    };
+
     const handleInputChange = (e) => {
-        setLocation(e.target.value)
+        setLocation(e.target.value);
+        fetchSuggestions(e.target.value); // Fetch suggestions on input change
     }
+
+    const selectSuggestion = (suggestion) => {
+        setLocation(suggestion.name); // Set the selected suggestion as the location
+        setSuggestions([]); // Clear suggestions
+    };
 
     const getForecast = async (city) => {
         try {
@@ -66,7 +94,7 @@ const Skycast = () => {
     };
 
     const search = async () => {
-        if(location.trim() !== "") {
+        if (location.trim() !== "") {
             try {
                 const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=Metric&appid=${api_key}`;
                 const response = await fetch(url);
@@ -91,10 +119,10 @@ const Skycast = () => {
     };
 
     const handleKeyDown = (e) => {
-        if(e.key === 'Enter'){
-            search()
+        if (e.key === 'Enter') {
+            search();
         }
-    }
+    };
 
     const toggleTheme = () => {
         setIsDark(!isDark);
@@ -117,6 +145,15 @@ const Skycast = () => {
             <input type="text" placeholder="Enter the Location" value={location} onChange={handleInputChange} onKeyDown={handleKeyDown} />
             <i className="fa-solid fa-magnifying-glass" onClick={search}></i>
           </div>
+          {suggestions.length > 0 && (
+            <ul className="suggestions-list">
+                {suggestions.map((suggestion) => (
+                    <li key={suggestion.id} onClick={() => selectSuggestion(suggestion)}>
+                        {suggestion.name}, {suggestion.sys.country}
+                    </li>
+                ))}
+            </ul>
+          )}
         </div>
         <div className="weather">
             <img 

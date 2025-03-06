@@ -483,3 +483,24 @@ i {
 .light .forecast::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.2);
 }
+
+.suggestions-list {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0 0 0;
+    background: rgba(255, 255, 255, 0.9); /* Light background for suggestions */
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    max-height: 200px; /* Limit height */
+    overflow-y: auto; /* Scroll if too many suggestions */
+}
+
+.suggestions-list li {
+    padding: 10px;
+    cursor: pointer;
+    color: #333; /* Dark text color for visibility */
+}
+
+.suggestions-list li:hover {
+    background: rgba(0, 0, 0, 0.1); /* Highlight on hover */
+}
